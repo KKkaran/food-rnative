@@ -1,24 +1,40 @@
 import React from "react";
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native';
-import { Icon } from '@rneui/themed';
 import { FontAwesome } from '@expo/vector-icons';
 
 
-const SearchBar = () => {
-    return <View style={styles.searchStyle}>
+const SearchBar = ({input, onInputChanged, onInputSubmitting}) => {
+    return <View style={styles.parentStyle}>
             
-            <FontAwesome style={{fontSize:20}} name="search"/>
-            <TextInput style={{borderColor:'red', borderWidth:3, marginLeft:10 }} placeholder="Search..."/>
-            
+            <FontAwesome style={styles.searchIconStyle} name="search"/>
+            <TextInput
+                value={input}
+                style={styles.searchInputStyle}
+                placeholder="Search"
+                onChangeText={(input) => {
+                    onInputChanged(input)
+                }}
+                onEndEditing={()=> onInputSubmitting()}/>
+                
         </View>
 }
 
 const styles = StyleSheet.create({
-    searchStyle:{
+    parentStyle:{
         backgroundColor:'lightgray',
-        padding:10,
         flexDirection:'row',
-        borderRadius:15
+        borderRadius: 15,
+        height:50
+    },
+    searchIconStyle: {
+        fontSize: 20,
+        alignSelf: 'center',
+        marginHorizontal: 10
+    },
+    searchInputStyle: {
+        marginLeft: 10,
+        flex: 1,
+        fontSize:20
     }
 });
 
