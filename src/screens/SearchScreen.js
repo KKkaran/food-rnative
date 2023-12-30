@@ -1,31 +1,12 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet} from 'react-native';
 import  SearchBar  from "../components/searchBar";
-import yelp from "../api/yelp";
+import useResults from "../hooks/useResults";
 
 const SearchScreen = () => {
     const [searchKeyword, setSearchKeyword] = useState("");
-    const [results, setResults] = useState([]);
-    const [error, setError] = useState("")
+    const [searchApi, results, error] = useResults();
 
-    const searchApi = async () => {
-        console.log("searching now")
-        try {
-            var response = await yelp.get('/search', {
-                params: {
-                    limit: 50,
-                    term: searchKeyword,
-                    location: 'new jersey'
-                }
-            })
-            console.log(response.data)
-            setResults(response.data.businesses)
-        } catch (er) {
-            console.log(er)
-            setError("Something went wrong, Please try again!")
-        }
-    } 
-   
     return <View style={styles.parentStyle}>
         <SearchBar
             input = {searchKeyword}
@@ -35,7 +16,7 @@ const SearchScreen = () => {
             }}
             onInputSubmitting={() => {
                 console.log("submitting now!!")
-                searchApi()
+                searchApi(searchKeyword)
             }}/>
         {error ? <Text>{ error }</Text> : null}
         <Text>Search Results: { results.length }</Text>
