@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet} from 'react-native';
 import  SearchBar  from "../components/searchBar";
 import useResults from "../hooks/useResults";
+import ResultList from "../components/ResultsList";
 
 const SearchScreen = () => {
     const [searchKeyword, setSearchKeyword] = useState("");
@@ -18,7 +19,9 @@ const SearchScreen = () => {
                 console.log("submitting now!!")
                 searchApi(searchKeyword)
             }}/>
-        {error ? <Text>{ error }</Text> : null}
+        {error ? <Text>{error}</Text> : null}
+        <ResultList
+            businesses={ results} />
         <Text>Search Results: { results.length }</Text>
     </View>
 }

@@ -16,6 +16,7 @@ export default () => {
                     location: 'new jersey'
                 }
             })
+            console.log(response.data.businesses[0])
             setResults(response.data.businesses)
         } catch (er) {
             console.log(er)
